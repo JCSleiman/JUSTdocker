@@ -1,0 +1,28 @@
+version: '3'
+services:
+    php-apache:
+        build:
+            context: .php-apache
+        ports:
+            - 80:80
+        volumes:
+            - ./DocumentRoot:/var/www/html
+        links:
+            - 'mysqlite:database-service'
+
+    mysqlite:
+        build:
+            context: .mysqlite
+        volumes:
+            - mariadb:/var/lib/mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+            MYSQL_ROOT_PASSWORD: "rootpwd"
+            MYSQL_USER: 'gooduser'
+            MYSQL_PASSWORD: 'betterpassword'
+            MYSQL_DATABASE: 'bestdb'
+
+volumes:
+    mysqlite:
+
+        
